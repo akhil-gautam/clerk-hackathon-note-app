@@ -1,0 +1,134 @@
+.container {
+  padding: 1rem 2rem;
+}
+
+.head {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgb(56, 55, 55);
+}
+
+.datetime {
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.notescard {
+  margin-top: 2rem;
+  background: #bcfacc;
+  border: 1px solid;
+  padding: 1rem;
+  .notesheader {
+    margin-bottom: 1rem;
+    color: rgb(109, 107, 107);
+  }
+  .notesrow {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.notecard {
+  width: 18rem;
+  margin-right: 2rem;
+  border: 1px solid;
+  background: #9dd3f7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #eff0fa,
+    #c7ebf8,
+    #c4e4fa
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #eff0fa,
+    #d0effa,
+    #c4e4fa
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  padding: 1rem;
+  cursor: pointer;
+
+  .title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .description {
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .footer {
+    color: rgb(80, 78, 78);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  & > p:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    box-shadow: -7px -7px #000;
+    transform: translate(5px, 5px);
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.newnote {
+  color: unset;
+  text-decoration: unset;
+  width: 18rem;
+  height: inherit;
+  min-height: 14rem;
+  background-color: #fafafa;
+  border: 1px dashed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  .plus {
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    box-shadow: -7px -7px #000;
+    transform: translate(5px, 5px);
+    transition: all 0.2s ease-in-out;
+    border: 1px solid;
+  }
+}
+
+.scratchpadwrapper {
+  margin-top: 3rem;
+  height: 20rem;
+  width: 100%;
+
+  label {
+    font-weight: 800;
+  }
+
+  textarea {
+    resize: none;
+    height: 100%;
+    width: 100%;
+    margin-top: 0.3rem;
+    background-color: rgb(253, 248, 200);
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  button {
+    background-color: #566ee0;
+    color: white;
+    border: none;
+    padding: 0.4rem 2.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  margin-bottom: 1rem;
+}

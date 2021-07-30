@@ -1,0 +1,12 @@
+.main-layout-wrapper {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.content-area {
+  width: 85%;
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 2rem;
+}

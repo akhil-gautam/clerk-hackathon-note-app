@@ -1,0 +1,29 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid;
+}
+
+.nav {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-list {
+  display: flex;
+}
+
+.menu-list > li {
+  margin: auto;
+}
+
+.menu-list > li:not(:last-child) {
+  margin-right: 1.5rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}

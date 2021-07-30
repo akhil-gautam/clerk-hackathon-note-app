@@ -1,0 +1,2 @@
+class NoteInvitation < ApplicationRecord
+end

@@ -1,0 +1,99 @@
+.wrapper {
+  display: flex;
+  .list {
+    width: 30%;
+    border-right: 1px solid;
+    height: 100vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      .headflex,
+      .newbtn {
+        display: flex;
+        align-items: center;
+      }
+      .newbtn {
+        width: auto;
+        padding: 0.3rem 0.7rem;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+    }
+    hr {
+      width: 100%;
+    }
+    .icon {
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-right: 0.2rem;
+    }
+    .emptyList {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+    }
+    button {
+      margin-top: 0.2rem;
+      width: 80%;
+      padding: 0.7rem 1rem;
+      background-color: transparent;
+      border: 1px solid;
+      font-size: 1.4rem;
+      cursor: pointer;
+      &:hover {
+        transition: all 0.2s ease-in;
+        color: #fff;
+        background-color: rgb(44, 43, 43);
+      }
+    }
+  }
+  .details {
+    width: 70%;
+  }
+}
+.eachnote {
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem;
+  border: 1px solid;
+  margin-bottom: 0.7rem;
+  cursor: pointer;
+  .title {
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: rgb(70, 69, 69);
+  }
+  .datetime {
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: rgb(97, 96, 96);
+  }
+}
+.activenote {
+  background-color: #4a4949 !important;
+  .datetime,
+  .title {
+    color: #fff !important;
+  }
+}
+.editorwrapper {
+  height: 100vh;
+  overflow-y: scroll;
+}
+.loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: xx-large;
+}
