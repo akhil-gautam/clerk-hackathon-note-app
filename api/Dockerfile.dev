@@ -1,0 +1,38 @@
+FROM ruby:2.7.3-alpine
+
+ENV APP_PATH /var/app
+ENV BUNDLE_VERSION 2.1.4
+ENV RAILS_PORT 3000
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# install dependencies for application
+RUN apk -U add --no-cache \
+build-base \
+git \
+postgresql-dev \
+postgresql-client \
+libxml2-dev \
+libxslt-dev \
+nodejs \
+npm \
+yarn \
+tzdata \
+&& rm -rf /var/cache/apk/* \
+&& mkdir -p $APP_PATH 
+
+
+RUN gem install bundler --version "$BUNDLE_VERSION"
+
+# navigate to app directory
+WORKDIR $APP_PATH
+
+COPY Gemfile Gemfile.lock ./
+
+RUN bundle check || bundle install --jobs=8
+
+COPY . .
+
+EXPOSE $RAILS_PORT

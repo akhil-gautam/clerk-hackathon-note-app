@@ -1,0 +1,44 @@
+version: "3.7"
+networks:
+  development:
+volumes:
+  db_data:
+  gem_cache:
+services:
+  db:
+    image: postgres:12.5-alpine
+    container_name: db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    networks:
+      - development
+    ports:
+      - 5432
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: app
+    image: noteapp-dev:1.0.0
+    volumes:
+      - .:/var/app:cached
+      - gem_cache:/usr/local/bundle/gems
+    networks:
+      - development
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    entrypoint: docker-entrypoint.sh
+    command: ["rails", "server", "-p", "3000", "-b", "0.0.0.0"]
+    environment:
+      RAILS_ENV: development
+      NODE_ENV: development
+      PG_USER: postgres
+      PG_PASSWORD: password
+      PG_HOST: db
+    depends_on:
+      - db
