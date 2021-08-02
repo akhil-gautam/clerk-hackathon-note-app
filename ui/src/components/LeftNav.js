@@ -39,7 +39,7 @@ const LeftNav = () => {
         </svg>
         <span>Notes</span>
       </a>
-      <a href='#' className={styles.iconlink}>
+      {/* <a href='#' className={styles.iconlink}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className={styles.icon}
@@ -55,8 +55,8 @@ const LeftNav = () => {
           />
         </svg>
         <span>Shared with me</span>
-      </a>
-      <a href='#' className={styles.iconlink}>
+      </a> */}
+      <Link to='/trash' className={styles.iconlink}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className={styles.icon}
@@ -72,7 +72,7 @@ const LeftNav = () => {
           />
         </svg>
         <span>Trash</span>
-      </a>
+      </Link>
     </nav>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   ClerkProvider,
@@ -8,25 +8,25 @@ import {
   SignedOut,
 } from '@clerk/clerk-react';
 import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './pages/Home';
 import CustomizedSignIn from './pages/SignIn';
 import CustomizedSignUp from './pages/SignUp';
+import Trashed from './pages/Trashed';
 
 import './App.css';
 import Notes from './pages/Notes';
 import { CLERK_FRONTEND_API, API_URL } from './constants';
 
 const App = () => {
-  const [active, setActive] = useState(localStorage.getItem('active'));
+  const [active, setActive] = useState(null);
 
   async function touchNote() {
     const response = await axios.post(`${API_URL}/notes`, {
       session: window.Clerk.session.id,
     });
-    localStorage.setItem('active', response.data.note.id);
     setActive(response.data.note.id);
+    return response.data.note.id;
   }
 
   return (
@@ -49,8 +49,13 @@ const App = () => {
               active={active}
             />
           </PrivateRoute>
+          <PrivateRoute path='/trash'>
+            <Trashed />
+          </PrivateRoute>
         </Switch>
-        <ToastContainer />
+        <Toaster
+          toastOptions={{ style: { background: '#333', color: '#fff' } }}
+        />
       </ClerkProvider>
     </Router>
   );

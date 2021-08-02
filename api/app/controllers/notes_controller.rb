@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   def index
-    notes = @current_user ? @current_user.notes : []
+    notes = @current_user ? @current_user.notes.active : []
     render json: { notes: notes }, status: 200
   end
   
@@ -31,6 +31,46 @@ class NotesController < ApplicationController
     render json: { message: e.message }, status: 422
   end
 
+  def trash
+    if can_access?
+      @note.update(trashed: true)
+      render json: @note, status: 200
+    else
+      render json: { message: 'Unauthorized to access.'}, status: 401
+    end
+  rescue Exception => e
+    render json: { message: e.message }, status: 422
+  end
+
+  def restore
+    note = Note.trashed.where(id: params[:id]).last
+    if note.user_id == @current_user.id
+      note.update(trashed: false)
+      render json: note, status: 200
+    else
+      render json: { message: 'Unauthorized to delete.'}, status: 401
+    end
+  rescue Exception => e
+    render json: { message: e.message }, status: 422
+  end
+
+  def trashed
+    notes = @current_user ? @current_user.notes.trashed : []
+    render json: { notes: notes }, status: 200
+  end
+
+  def destroy
+    note = Note.trashed.where(id: params[:id]).last
+    if note.user_id == @current_user.id
+      note.destroy
+      render json: {message: 'Deleted permanently!'}, status: 200
+    else
+      render json: { message: 'Unauthorized to delete.'}, status: 401
+    end
+  rescue Exception => e
+    render json: { message: e.message }, status: 422
+  end
+
   private
 
   def note_params
@@ -38,7 +78,7 @@ class NotesController < ApplicationController
   end
 
   def can_access?
-    @note = Note.find(params[:id])
+    @note = Note.active.where(id: params[:id]).last
     @note.user_id == @current_user.id
   end
 end

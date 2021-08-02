@@ -63,8 +63,9 @@
   display: flex;
   flex-direction: column;
   padding: 0.4rem;
-  border: 1px solid;
-  margin-bottom: 0.7rem;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  margin-bottom: 0.2rem;
   cursor: pointer;
   .title {
     margin-bottom: 0.4rem;

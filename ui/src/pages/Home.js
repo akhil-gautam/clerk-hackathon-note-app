@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 import styles from './Home.module.scss';
 import Layout from '../components/Layout';
@@ -106,7 +106,7 @@ const ScratchPad = () => {
     );
     setData(response.data.data);
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.patch(`${API_URL}/scratchpads/save`, {

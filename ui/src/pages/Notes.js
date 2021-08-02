@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import axios from 'axios';
 
 import Layout from '../components/Layout';
@@ -23,11 +23,14 @@ const Notes = ({ active, setActive, touchNote }) => {
   }, []);
 
   const fetchNotes = async () => {
+    const prevNotesCount = notes.length;
     setLoading(true);
     const response = await axios.get(
       `${API_URL}/notes?session=${window.Clerk.session.id}`
     );
     setNotes(response.data.notes);
+    (!active || prevNotesCount > response.data.notes.length) &&
+      setActive(response.data.notes[0]?.id);
     setLoading(false);
   };
 
@@ -43,16 +46,21 @@ const Notes = ({ active, setActive, touchNote }) => {
             notes={notes}
             touchNote={touchNote}
             active={active}
+            refetch={fetchNotes}
             setActive={setActive}
           />
         </ul>
         <div className={styles.details}>
           {active ? (
             <div className={styles.editorwrapper}>
-              <Details active={active} refetch={fetchNotes} />
+              <Editor
+                active={active}
+                refetch={fetchNotes}
+                setActive={setActive}
+              />
             </div>
           ) : (
-            <div className={styles.emptyDetail}>No note to show</div>
+            <div className={styles.emptyDetail}>Select a note to view!</div>
           )}
         </div>
       </div>
@@ -60,17 +68,15 @@ const Notes = ({ active, setActive, touchNote }) => {
   );
 };
 
-const NotesList = ({ notes = [], touchNote, active, setActive }) => {
-
+const NotesList = ({ notes = [], touchNote, active, setActive, refetch }) => {
   const setActiveNote = (id) => {
     setActive(id);
-    window.localStorage.setItem('active', id);
-    window.location = `/notes/${id}`;
   };
 
   const handleClick = async () => {
-    await touchNote();
-    window.location = `/notes/${window.localStorage.getItem('active')}`
+    const id = await touchNote();
+    refetch();
+    setActive(id);
   };
 
   return (
@@ -147,7 +153,7 @@ const EmptyList = ({ touchNote, active }) => {
   const history = useHistory();
   const handleClick = async () => {
     await touchNote();
-    history.push(`/notes/${window.localStorage.getItem('active')}`);
+    history.push(`/notes`);
   };
 
   return (
@@ -168,54 +174,6 @@ const EmptyList = ({ touchNote, active }) => {
       </svg>
       <button onClick={handleClick}>Create your first note</button>
     </div>
-  );
-};
-
-const Details = ({ active, refetch }) => {
-  const [data, setData] = useState(null);
-  const [title, setTitle] = useState('');
-
-  useEffect(() => {
-    fetchNote();
-  }, [active]);
-
-  const fetchNote = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/notes/${active}?session=${window.Clerk.session.id}`
-      );
-      setData(response.data.raw);
-      setTitle(response.data.title);
-    } catch (e) {
-      console.warn(e.message);
-    }
-  };
-
-  const handleSave = async (savedData) => {
-    try {
-      const response = await axios.patch(`${API_URL}/notes/${active}`, {
-        raw: savedData,
-        title: title,
-        session: window.Clerk.session.id,
-      });
-      setData(response.data.raw);
-      setTitle(response.data.title);
-      toast.dark('Updated successfully.');
-      refetch();
-    } catch (e) {
-      console.warn(e.message);
-    }
-  };
-
-  return data ? (
-    <Editor
-      title={title}
-      data={data}
-      handleSave={(savedData) => handleSave(savedData)}
-      setTitle={setTitle}
-    />
-  ) : (
-    <div className={styles.loading}>Loading...</div>
   );
 };
 

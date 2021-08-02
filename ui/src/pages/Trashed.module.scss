@@ -1,0 +1,50 @@
+.header {
+  padding: 2rem 0 0 2rem;
+}
+
+.listContainer {
+  padding: 2rem;
+}
+
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid;
+  padding: 1rem;
+  box-shadow: -4px -4px #cccdd6;
+  transition: all 0.2s ease-in;
+  margin-bottom: 1.3rem;
+  &:hover {
+    transition: all 0.2s ease-in;
+    box-shadow: -8px -8px #cccdd6, 8px 8px #cccdd6;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+  .btn {
+    cursor: pointer;
+    &:first-child {
+      margin-right: 1rem;
+    }
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+}
+.nonotes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: red;
+}
